@@ -29,6 +29,8 @@ public class Spawner : MonoBehaviour
 
     bool isDiable;
 
+    public event Action<int> OnNewWave;
+
     private void Start()
     {
         playerEntity = FindObjectOfType<Player>();
@@ -39,6 +41,7 @@ public class Spawner : MonoBehaviour
         playerEntity.OnDeath += OnPlayerDeath;
 
         map = FindObjectOfType<MapGenerator>();
+
         NextWave();
     }
 
@@ -107,6 +110,11 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    void ResetPlayerPosition()
+    {
+        playerT.position = map.GetTileFromPosition(Vector3.zero).position + Vector3.up * 3;
+    }
+
     void NextWave()
     {
         currentWaveNumber++;
@@ -116,6 +124,12 @@ public class Spawner : MonoBehaviour
 
             enemiesRemainingToSpawn = currentWave.enemyCount;
             enemiesRemainingAlive = enemiesRemainingToSpawn;
+
+            if (OnNewWave != null)
+            {
+                OnNewWave.Invoke(currentWaveNumber);
+                ResetPlayerPosition();
+            }
         }
 
     }
