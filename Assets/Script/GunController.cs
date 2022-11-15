@@ -26,11 +26,27 @@ public class GunController : MonoBehaviour
         equippedGun.transform.parent = weaponHold;
     }
 
-    public void Shoot()
+    public void OnTiggerHolde()
     {
         if (equippedGun != null)
         {
-            equippedGun.Shoot();
+            equippedGun.OnTiggerHolde();
+        }
+    }
+
+    public void OnTriggerRelease()
+    {
+        if (equippedGun != null)
+        {
+            equippedGun.OnTiggerRelese();
+        }
+    }
+
+    public float GunHeight
+    {
+        get
+        {
+            return weaponHold.position.y;
         }
     }
 }

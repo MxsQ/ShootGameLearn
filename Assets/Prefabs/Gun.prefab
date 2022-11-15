@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 129847582}
   m_Layer: 0
-  m_Name: Projetile Spawn
+  m_Name: Projetile Spawn 01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,10 +26,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.005, z: 0.541}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 7209361109477778949}
+  m_Children: []
   m_Father: {fileID: 4106238898594260289}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &992676000
 GameObject:
@@ -319,7 +318,7 @@ Transform:
   - {fileID: 740939609295363877}
   - {fileID: 5748505565705584140}
   m_Father: {fileID: 4106238898594260289}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2903401961103688003
 GameObject:
@@ -431,9 +430,11 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 7209361109477778949}
   - {fileID: 2139053393022850252}
-  - {fileID: 129847582}
   - {fileID: 3412393576064136031}
+  - {fileID: 129847582}
+  - {fileID: 7374703141051541480}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -449,10 +450,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01ec07fcdc2ab47b8b5a0d4fe2edb19b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  muzzle: {fileID: 129847582}
+  fireMode: 0
+  projectileSpawn:
+  - {fileID: 129847582}
+  - {fileID: 7374703141051541480}
   projectile: {fileID: -3153324492362516200, guid: d6c29a5bf80bbef4385218f2d6adf7e3, type: 3}
   msBetweenShots: 100
   muzzleVelocity: 35
+  burstCount: 5
   shell: {fileID: 5995401180421450121, guid: 58f0b761823f4411f9c1c5938653ad64, type: 3}
   shellEjection: {fileID: 3412393576064136031}
 --- !u!114 &1619720301
@@ -639,6 +644,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6041479306491078872
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7374703141051541480}
+  m_Layer: 0
+  m_Name: Projetile Spawn 02
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7374703141051541480
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6041479306491078872}
+  m_LocalRotation: {x: -0, y: 0.19726054, z: -0, w: 0.98035115}
+  m_LocalPosition: {x: 0.093, y: -0.005, z: 0.541}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4106238898594260289}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 22.754, z: 0}
 --- !u!1 &6154160508583521740
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,13 +727,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9017381149491219171}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.005, z: 0.541}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 992676001}
   - {fileID: 2021730002}
   - {fileID: 8375860007286193237}
-  m_Father: {fileID: 129847582}
+  m_Father: {fileID: 4106238898594260289}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

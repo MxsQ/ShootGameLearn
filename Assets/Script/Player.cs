@@ -8,6 +8,8 @@ public class Player : LivingEntity
 {
     public float moveSpeed = 5;
 
+    [SerializeField] public Crosshairs crosshairs;
+
     Camera viewCamera;
     PlayerController controller;
     GunController gunController;
@@ -29,21 +31,27 @@ public class Player : LivingEntity
 
         // Look Input
         Ray ray = viewCamera.ScreenPointToRay(Input.mousePosition);
-        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+        Plane groundPlane = new Plane(Vector3.up, Vector3.zero * gunController.GunHeight);
         float rayDistance;
 
         if (groundPlane.Raycast(ray, out rayDistance))
         {
             Vector3 point = ray.GetPoint(rayDistance);
             //Debug.DrawLine(ray.origin, point, Color.red);
-
             controller.LookAt(point);
+            crosshairs.transform.position = point;
+            crosshairs.DetectTargets(ray);
         }
 
         // Weapon input
         if (Input.GetMouseButton(0))
         {
-            gunController.Shoot();
+            gunController.OnTiggerHolde();
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            gunController.OnTriggerRelease();
         }
     }
 }
