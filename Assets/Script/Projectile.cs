@@ -23,7 +23,7 @@ public class Projectile : MonoBehaviour
         Collider[] initialCollisions = Physics.OverlapSphere(transform.position, .1f, collisionMask);
         if (initialCollisions.Length > 0)
         {
-            OnHitObject(initialCollisions[0]);
+            OnHitObject(initialCollisions[0], transform.position);
         }
     }
 
@@ -42,28 +42,17 @@ public class Projectile : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, moveDistance + skinwith, collisionMask, QueryTriggerInteraction.Collide))
         {
-            OnHitObject(hit);
+            OnHitObject(hit.collider, hit.point);
         }
 
     }
 
-    void OnHitObject(RaycastHit hit)
-    {
-        IDamageale damagealeObject = hit.collider.GetComponent<IDamageale>();
-        if (damagealeObject != null)
-        {
-            damagealeObject.TakeHit(damage, hit);
-        }
-
-        GameObject.Destroy(gameObject);
-    }
-
-    void OnHitObject(Collider c)
+    void OnHitObject(Collider c, Vector3 hitPoint)
     {
         IDamageale damagealeObject = c.GetComponent<IDamageale>();
         if (damagealeObject != null)
         {
-            damagealeObject.TakeDamage(damage);
+            damagealeObject.TakeHit(damage, hitPoint, transform.forward);
         }
 
         GameObject.Destroy(gameObject);

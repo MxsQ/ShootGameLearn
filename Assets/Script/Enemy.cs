@@ -10,6 +10,7 @@ public class Enemy : LivingEntity
     public enum State { Idle, Chasing, Attacking };
     State currentState;
 
+    [SerializeField] public ParticleSystem deathEffect;
 
     NavMeshAgent pathfinder;
     Transform target;
@@ -48,7 +49,16 @@ public class Enemy : LivingEntity
             targetCollisionRadius = GetComponent<CapsuleCollider>().radius;
             StartCoroutine(UpdatePath());
         }
+    }
 
+    public override void TakeHit(float damage, Vector3 hitPoint, Vector3 hitDirection)
+    {
+        if (damage >= health)
+        {
+            ParticleSystem effect = Instantiate(deathEffect, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection));
+            Destroy(effect, effect.startLifetime);
+        }
+        base.TakeHit(damage, hitPoint, hitDirection);
     }
 
     void OnTargetDeath()
