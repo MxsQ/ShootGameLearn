@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,9 +18,20 @@ public class Player : LivingEntity
     protected override void Start()
     {
         base.Start();
+    }
+
+    private void Awake()
+    {
         controller = GetComponent<PlayerController>();
         gunController = GetComponent<GunController>();
         viewCamera = Camera.main;
+        FindObjectOfType<Spawner>().OnNewWave += OnNewWave;
+    }
+
+    void OnNewWave(int waveNumber)
+    {
+        health = startingHealth;
+        gunController.EquipGun(waveNumber - 1);
     }
 
     void Update()
@@ -41,6 +53,13 @@ public class Player : LivingEntity
             controller.LookAt(point);
             crosshairs.transform.position = point;
             crosshairs.DetectTargets(ray);
+
+            //print((new Vector2(point.x, point.z) - new Vector2(transform.position.x, transform.position.z)).magnitude);
+            if ((new Vector2(point.x, point.z) - new Vector2(transform.position.x, transform.position.z)).sqrMagnitude > 4)
+            {
+                gunController.Aim(point);
+            }
+
         }
 
         // Weapon input
@@ -53,5 +72,17 @@ public class Player : LivingEntity
         {
             gunController.OnTriggerRelease();
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            gunController.Reload();
+        }
+
+    }
+
+    public override void Die()
+    {
+        AudioManager.instance.PlaySound("Player death", transform.position);
+        base.Die();
     }
 }

@@ -5,15 +5,12 @@ using UnityEngine;
 public class GunController : MonoBehaviour
 {
     [SerializeField] public Transform weaponHold;
-    [SerializeField] public Gun startingGun;
+    [SerializeField] public Gun[] allGuns;
     Gun equippedGun;
 
     private void Start()
     {
-        if (startingGun != null)
-        {
-            EquipGun(startingGun);
-        }
+
     }
 
     public void EquipGun(Gun gunToEquip)
@@ -26,11 +23,16 @@ public class GunController : MonoBehaviour
         equippedGun.transform.parent = weaponHold;
     }
 
+    public void EquipGun(int weapnIndex)
+    {
+        EquipGun(allGuns[weapnIndex]);
+    }
+
     public void OnTiggerHolde()
     {
         if (equippedGun != null)
         {
-            equippedGun.OnTiggerHolde();
+            equippedGun.OnTriggerHold();
         }
     }
 
@@ -38,7 +40,23 @@ public class GunController : MonoBehaviour
     {
         if (equippedGun != null)
         {
-            equippedGun.OnTiggerRelese();
+            equippedGun.OnTriggerRelease();
+        }
+    }
+
+    public void Aim(Vector3 aimPoint)
+    {
+        if (equippedGun != null)
+        {
+            equippedGun.Aim(aimPoint);
+        }
+    }
+
+    public void Reload()
+    {
+        if (equippedGun != null)
+        {
+            equippedGun.Reload();
         }
     }
 
