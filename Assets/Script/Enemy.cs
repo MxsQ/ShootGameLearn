@@ -11,6 +11,7 @@ public class Enemy : LivingEntity
     State currentState;
 
     [SerializeField] public ParticleSystem deathEffect;
+    public static event Action OnDeathStatic;
 
     NavMeshAgent pathfinder;
     Transform target;
@@ -69,7 +70,8 @@ public class Enemy : LivingEntity
         }
         startingHealth = enemyHealth;
 
-        skinMaterial = GetComponent<Renderer>().sharedMaterial;
+        deathEffect.startColor = new Color(skinColour.r, skinColour.g, skinColour.b, 1);
+        skinMaterial = GetComponent<Renderer>().material;
         skinMaterial.color = skinColour;
         originalColour = skinMaterial.color;
     }
@@ -80,6 +82,10 @@ public class Enemy : LivingEntity
         AudioManager.instance.PlaySound("Impact", transform.position);
         if (damage >= health)
         {
+            if (OnDeathStatic != null)
+            {
+                OnDeathStatic();
+            }
             AudioManager.instance.PlaySound("Enemy Death", transform.position);
             ParticleSystem effect = Instantiate(deathEffect, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection));
             Destroy(effect, effect.startLifetime);

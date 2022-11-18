@@ -1,21 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MusicManager : MonoBehaviour
 {
     [SerializeField] AudioClip mainTheme;
     [SerializeField] AudioClip menuTheme;
 
+    string sceneName;
+
     void Start()
     {
-        AudioManager.instance.PlayMusic(menuTheme, 2);
+        OnLevelWasLoaded(0);
     }
-    void Update()
+
+    private void OnLevelWasLoaded(int level)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        string newSceneName = SceneManager.GetActiveScene().name;
+
+        if (newSceneName != sceneName)
         {
-            AudioManager.instance.PlayMusic(mainTheme, 3);
+            sceneName = newSceneName;
+            Invoke("PlayMusic", .2f);
+        }
+    }
+
+    void PlayMusic()
+    {
+        AudioClip clipToPlay = null;
+        if (sceneName == "Menu")
+        {
+            clipToPlay = menuTheme;
+
+        }
+        else
+        {
+            clipToPlay = mainTheme;
+
+        }
+
+        if (clipToPlay != null)
+        {
+            AudioManager.instance.PlayMusic(clipToPlay, 2);
+            Invoke("PlayMusic", clipToPlay.length);
         }
     }
 }
